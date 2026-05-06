@@ -1,11 +1,18 @@
+# Ghostty configuration
+# Reload with Cmd+Shift+, after editing.
+
+# Font
 font-family = FiraCode Nerd Font
-font-size = 13.0
+font-size = 16.0
+font-thicken = false
 
 # Gruvbox Dark from dotfiles/.config/kitty/themes/gruvbox_dark.conf
 background = #1d2021
 foreground = #ebdbb2
 
 cursor-color = #928374
+cursor-style = block
+cursor-style-blink = false
 
 selection-foreground = #928374
 selection-background = #3c3836
@@ -26,3 +33,116 @@ palette = 12=#83a598
 palette = 13=#d3869b
 palette = 14=#8ec07c
 palette = 15=#928374
+
+# Window
+window-padding-x = 8
+window-padding-y = 6
+window-padding-balance = true
+window-padding-color = background
+window-inherit-working-directory = true
+window-inherit-font-size = true
+window-save-state = default
+window-new-tab-position = current
+window-show-tab-bar = auto
+resize-overlay = after-first
+resize-overlay-position = center
+unfocused-split-opacity = 0.85
+
+# macOS
+macos-titlebar-style = transparent
+macos-window-buttons = visible
+macos-window-shadow = true
+macos-option-as-alt = true
+macos-auto-secure-input = false
+macos-secure-input-indication = true
+macos-dock-drop-behavior = new-tab
+
+# Shell integration
+shell-integration = detect
+shell-integration-features = cursor,no-sudo,title,no-ssh-env,no-ssh-terminfo,path
+term = xterm-ghostty
+
+# Clipboard, links, and mouse
+clipboard-read = ask
+clipboard-write = allow
+clipboard-trim-trailing-spaces = true
+clipboard-paste-protection = true
+clipboard-paste-bracketed-safe = true
+copy-on-select = true
+link-url = true
+link-previews = true
+mouse-hide-while-typing = true
+mouse-scroll-multiplier = precision:1,discrete:3
+
+# Core app controls
+keybind = super+shift+,=reload_config
+keybind = super+,=open_config
+keybind = super+shift+p=toggle_command_palette
+keybind = super+enter=toggle_fullscreen
+keybind = super+shift+enter=toggle_split_zoom
+keybind = super+q=quit
+keybind = super+k=clear_screen
+
+# Clipboard
+keybind = super+c=copy_to_clipboard:mixed
+keybind = super+v=paste_from_clipboard
+keybind = super+shift+v=paste_from_selection
+keybind = super+ctrl+shift+j=write_screen_file:copy,plain
+
+# Font sizing
+keybind = super+==increase_font_size:1
+keybind = super++=increase_font_size:1
+keybind = super+-=decrease_font_size:1
+keybind = super+0=reset_font_size
+
+# Tabs and windows
+keybind = super+n=new_window
+keybind = super+t=new_tab
+keybind = super+w=close_surface
+keybind = super+alt+w=close_tab:this
+keybind = super+shift+w=close_window
+keybind = super+shift+[=previous_tab
+keybind = super+shift+]=next_tab
+keybind = super+1=goto_tab:1
+keybind = super+2=goto_tab:2
+keybind = super+3=goto_tab:3
+keybind = super+4=goto_tab:4
+keybind = super+5=goto_tab:5
+keybind = super+6=goto_tab:6
+keybind = super+7=goto_tab:7
+keybind = super+8=goto_tab:8
+keybind = super+9=last_tab
+
+# Splits
+keybind = super+d=new_split:right
+keybind = super+shift+d=new_split:down
+keybind = super+[=goto_split:previous
+keybind = super+]=goto_split:next
+keybind = super+alt+arrow_up=goto_split:up
+keybind = super+alt+arrow_down=goto_split:down
+keybind = super+alt+arrow_left=goto_split:left
+keybind = super+alt+arrow_right=goto_split:right
+keybind = super+ctrl+arrow_up=resize_split:up,10
+keybind = super+ctrl+arrow_down=resize_split:down,10
+keybind = super+ctrl+arrow_left=resize_split:left,10
+keybind = super+ctrl+arrow_right=resize_split:right,10
+keybind = super+ctrl+==equalize_splits
+
+# Navigation and search
+keybind = super+arrow_up=jump_to_prompt:-1
+keybind = super+arrow_down=jump_to_prompt:1
+keybind = super+home=scroll_to_top
+keybind = super+end=scroll_to_bottom
+keybind = super+page_up=scroll_page_up
+keybind = super+page_down=scroll_page_down
+keybind = super+f=start_search
+keybind = super+e=search_selection
+keybind = super+g=navigate_search:next
+keybind = super+shift+g=navigate_search:previous
+
+# Shell editing shortcuts
+keybind = super+arrow_right=text:\x05
+keybind = super+arrow_left=text:\x01
+keybind = super+backspace=text:\x15
+keybind = alt+arrow_left=esc:b
+keybind = alt+arrow_right=esc:f
