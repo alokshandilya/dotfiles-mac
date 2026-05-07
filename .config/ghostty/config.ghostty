@@ -9,6 +9,9 @@ font-thicken = false
 # Gruvbox Dark from dotfiles/.config/kitty/themes/gruvbox_dark.conf
 background = #1d2021
 foreground = #ebdbb2
+background-opacity = 0.65
+background-opacity-cells = true
+background-blur = macos-glass-regular
 
 cursor-color = #928374
 cursor-style = block
