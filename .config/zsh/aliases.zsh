@@ -18,7 +18,7 @@ alias nman='bob'
 alias sshk="kitty +kitten ssh"
 
 if command -v eza >/dev/null 2>&1; then
-  alias ls='eza --icons'
+  alias ls='eza --icons -l'
   alias la='eza --icons -la'
 fi
 

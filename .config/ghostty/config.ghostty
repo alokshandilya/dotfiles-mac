@@ -2,16 +2,15 @@
 # Reload with Cmd+Shift+, after editing.
 
 # Font
-font-family = FiraCode Nerd Font
+font-family = JetBrainsMono Nerd Font
 font-size = 16.0
-font-thicken = false
+font-thicken = true
 
 # Gruvbox Dark from dotfiles/.config/kitty/themes/gruvbox_dark.conf
 background = #1d2021
 foreground = #ebdbb2
-background-opacity = 0.65
-background-opacity-cells = true
-background-blur = macos-glass-regular
+background-opacity = 0.85
+background-blur-radius = 30
 
 cursor-color = #928374
 cursor-style = block
