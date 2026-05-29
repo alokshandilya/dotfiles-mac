@@ -1,4 +1,8 @@
 {
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
   "project_panel": {
     "dock": "right"
   },
@@ -12,6 +16,9 @@
     "dock": "right"
   },
   "agent_servers": {
+    "github-copilot-cli": {
+      "type": "registry"
+    },
     "opencode": {
       "type": "registry"
     },
@@ -85,7 +92,7 @@
   "theme": {
     "mode": "dark",
     "light": "Gruvbox Light",
-    "dark": "Gruvbox Dark Hard"
+    "dark": "Gruvbox Dark"
   },
   "tabs": {
     "file_icons": true,

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Configuration options for JankyBorders
+# Sets style, border width (increased size), and colors to match your Gruvbox Dark theme.
+options=(
+  style=round
+  width=7.0
+  active_color=0xff89b482    # Custom Gruvbox Aqua/Green
+  inactive_color=0xff3c3836  # Gruvbox Dark Grey
+  hidpi=off
+)
+
+borders "${options[@]}"

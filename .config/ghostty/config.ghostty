@@ -9,7 +9,7 @@ font-thicken = true
 # Gruvbox Dark from dotfiles/.config/kitty/themes/gruvbox_dark.conf
 background = #1d2021
 foreground = #ebdbb2
-background-opacity = 0.85
+background-opacity = 0.80
 background-blur-radius = 30
 
 cursor-color = #928374
