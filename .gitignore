@@ -1,3 +1,6 @@
 .config/zsh/.zcompcache/
 .config/zsh/.zcompdump
 
+.config/zed/prompts/prompts-library-db.0.mdb/data.mdb
+.config/zed/prompts/prompts-library-db.0.mdb/lock.mdb
+.config/zsh/.zsh_sessions/72375BED-804E-40F8-85F2-B2E16866EA06.historynew
