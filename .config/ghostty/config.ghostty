@@ -3,14 +3,14 @@
 
 # Font
 font-family = JetBrainsMono Nerd Font
-font-size = 16.0
+font-size = 15.0
 font-thicken = true
 
 # Gruvbox Dark from dotfiles/.config/kitty/themes/gruvbox_dark.conf
 background = #1d2021
 foreground = #ebdbb2
-background-opacity = 0.80
-background-blur-radius = 30
+background-opacity = 0.8
+background-blur-radius = 60
 
 cursor-color = #928374
 cursor-style = block
