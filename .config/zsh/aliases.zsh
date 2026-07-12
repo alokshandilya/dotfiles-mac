@@ -16,6 +16,7 @@ alias zsh-update-plugins='find "$ZDOTDIR/plugins" -type d -exec test -e "{}/.git
 alias nvimrc='nvim ~/.config/nvim/'
 alias nman='bob'
 alias sshk="kitty +kitten ssh"
+alias free="top -l 1 | grep \"PhysMem\""
 
 if command -v eza >/dev/null 2>&1; then
   alias ls='eza --icons -l'

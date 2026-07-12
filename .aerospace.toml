@@ -12,6 +12,12 @@ after-startup-command = []
 # Start AeroSpace at login
 start-at-login = true
 
+# Automatically reload the config when ~/.aerospace.toml changes (since v0.21)
+auto-reload-config = true
+
+# Focus the window under the mouse cursor (since v0.21)
+focus-follows-mouse.enabled = true
+
 # Normalizations. See: https://nikitabobko.github.io/AeroSpace/guide#normalization
 enable-normalization-flatten-containers = true
 enable-normalization-opposite-orientation-for-nested-containers = true
@@ -34,7 +40,7 @@ default-root-container-orientation = 'auto'
 # See https://nikitabobko.github.io/AeroSpace/guide#on-focus-changed-callbacks
 # See https://nikitabobko.github.io/AeroSpace/commands#move-mouse
 # Fallback value (if you omit the key): on-focused-monitor-changed = []
-on-focused-monitor-changed = []
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 
 # You can effectively turn off macOS "Hide application" (cmd-h) feature by toggling this flag
 # Useful if you don't use this macOS feature, but accidentally hit cmd-h or cmd-alt-h key
@@ -51,6 +57,24 @@ persistent-workspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
 # See: https://nikitabobko.github.io/AeroSpace/commands#mode
 on-mode-changed = []
+
+# Workspace layout:
+# 1: browsers, 2: terminal/editor, 3: chat, 5: music
+on-window-detected = [
+    { if = 'test %{app-bundle-id} = com.apple.Safari',              run = 'move-node-to-workspace 1' },
+    { if = 'test %{app-bundle-id} = com.google.Chrome',             run = 'move-node-to-workspace 1' },
+    { if = 'test %{app-bundle-id} = company.thebrowser.Browser',    run = 'move-node-to-workspace 1' },
+    { if = 'test %{app-bundle-id} = org.mozilla.firefox',           run = 'move-node-to-workspace 1' },
+    { if = 'test %{app-bundle-id} = com.microsoft.VSCode',          run = 'move-node-to-workspace 2' },
+    { if = 'test %{app-bundle-id} = com.todesktop.230313mzl4w4u92', run = 'move-node-to-workspace 2' },
+    { if = 'test %{app-bundle-id} = dev.zed.Zed',                   run = 'move-node-to-workspace 2' },
+    { if = 'test %{app-bundle-id} = com.tinyspeck.slackmacgap',     run = 'move-node-to-workspace 3' },
+    { if = 'test %{app-bundle-id} = com.hnc.Discord',               run = 'move-node-to-workspace 3' },
+    { if = 'test %{app-bundle-id} = org.telegram.desktop',          run = 'move-node-to-workspace 3' },
+    { if = 'test %{app-bundle-id} = net.whatsapp.WhatsApp',         run = 'move-node-to-workspace 3' },
+    { if = 'test %{app-bundle-id} = com.spotify.client',            run = 'move-node-to-workspace 5' },
+    { if = 'test %{app-bundle-id} = com.apple.Music',               run = 'move-node-to-workspace 5' },
+]
 
 # Possible values: (qwerty|dvorak|colemak)
 # See https://nikitabobko.github.io/AeroSpace/guide#key-mapping
@@ -73,70 +97,13 @@ on-mode-changed = []
     outer.top =        8
     outer.right =      12
 
-# Workspace layout:
-# 1: browsers, 2: terminal/editor, 3: chat, 9: music
-[[on-window-detected]]
-    if.app-id = 'com.apple.Safari'
-    run = 'move-node-to-workspace 1'
-
-[[on-window-detected]]
-    if.app-id = 'com.google.Chrome'
-    run = 'move-node-to-workspace 1'
-
-[[on-window-detected]]
-    if.app-id = 'company.thebrowser.Browser'
-    run = 'move-node-to-workspace 1'
-
-[[on-window-detected]]
-    if.app-id = 'org.mozilla.firefox'
-    run = 'move-node-to-workspace 1'
-
-[[on-window-detected]]
-    if.app-id = 'com.microsoft.VSCode'
-    run = 'move-node-to-workspace 2'
-
-[[on-window-detected]]
-    if.app-id = 'com.todesktop.230313mzl4w4u92'
-    run = 'move-node-to-workspace 2'
-
-[[on-window-detected]]
-    if.app-id = 'dev.zed.Zed'
-    run = 'move-node-to-workspace 2'
-
-[[on-window-detected]]
-    if.app-id = 'com.tinyspeck.slackmacgap'
-    run = 'move-node-to-workspace 3'
-
-[[on-window-detected]]
-    if.app-id = 'com.hnc.Discord'
-    run = 'move-node-to-workspace 3'
-
-[[on-window-detected]]
-    if.app-id = 'org.telegram.desktop'
-    run = 'move-node-to-workspace 3'
-
-[[on-window-detected]]
-    if.app-id = 'net.whatsapp.WhatsApp'
-    run = 'move-node-to-workspace 3'
-
-[[on-window-detected]]
-    if.app-id = 'com.spotify.client'
-    run = 'move-node-to-workspace 5'
-
-[[on-window-detected]]
-    if.app-id = 'com.apple.Music'
-    run = 'move-node-to-workspace 5'
-
 [workspace-to-monitor-force-assignment]
-1 = ['secondary', 'main']
-2 = ['secondary', 'main']
-3 = ['secondary', 'main']
+1 = ['main']
+2 = ['main']
+3 = ['main']
 4 = ['secondary', 'main']
-5 = ['main']
-6 = ['main']
-7 = ['main']
-8 = ['main']
-9 = ['main']
+5 = ['secondary', 'main']
+6 = ['secondary', 'main']
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -166,6 +133,7 @@ on-mode-changed = []
     alt-w = 'exec-and-forget open -a Safari'
     alt-d = 'exec-and-forget osascript -e "tell application \"System Events\" to keystroke \" \" using {command down}"'
     alt-shift-q = 'close --quit-if-last-window'
+    alt-shift-b = "exec-and-forget osascript -e 'quit app \"BetterDisplay\"'"
     alt-f = 'fullscreen'
     alt-shift-space = 'layout floating tiling'
 
@@ -220,6 +188,7 @@ on-mode-changed = []
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#mode
     alt-shift-semicolon = 'mode service'
+    alt-x = 'mode power'
 
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -236,3 +205,8 @@ on-mode-changed = []
     alt-shift-j = ['join-with down', 'mode main']
     alt-shift-k = ['join-with up', 'mode main']
     alt-shift-l = ['join-with right', 'mode main']
+
+[mode.power.binding]
+    esc = 'mode main'
+    alt-shift-p = ["exec-and-forget osascript -e 'tell application \"System Events\" to shut down'", 'mode main']
+    alt-shift-r = ["exec-and-forget osascript -e 'tell application \"System Events\" to restart'", 'mode main']
