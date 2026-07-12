@@ -3,9 +3,17 @@
 [[ -r "$HOME/.local/bin/scripts/ai_enhanced.py" ]] &&
   alias ai="python \"$HOME/.local/bin/scripts/ai_enhanced.py\""
 
+# `find -printf` needs GNU find: on macOS that's `gfind` (Homebrew coreutils),
+# on Linux the native `find` already is GNU find.
 if command -v gfind >/dev/null 2>&1; then
-  alias sortsize='gfind . -type f -printf "%s %p\n" | awk '\''{size_bytes = $1; filename = ""; for (i = 2; i <= NF; i++) {filename = filename " " $i;} sub(/^ /, "", filename); printf "%d %s\n", size_bytes, filename;}'\'' | sort -nr | awk '\''{size_bytes = $1; filename = ""; for (i = 2; i <= NF; i++) {filename = filename " " $i;} sub(/^ /, "", filename); if (size_bytes < 1024) {printf "%d bytes %s\n", size_bytes, filename;} else if (size_bytes < 1024*1024) {printf "%.2f KB %s\n", size_bytes/1024, filename;} else if (size_bytes < 1024*1024*1024) {printf "%.2f MB %s\n", size_bytes/(1024*1024), filename;} else {printf "%.2f GB %s\n", size_bytes/(1024*1024*1024), filename;}}'\'''
+  _gnu_find=gfind
+elif find --version 2>/dev/null | grep -q GNU; then
+  _gnu_find=find
 fi
+if [[ -n "$_gnu_find" ]]; then
+  alias sortsize="$_gnu_find"' . -type f -printf "%s %p\n" | awk '\''{size_bytes = $1; filename = ""; for (i = 2; i <= NF; i++) {filename = filename " " $i;} sub(/^ /, "", filename); printf "%d %s\n", size_bytes, filename;}'\'' | sort -nr | awk '\''{size_bytes = $1; filename = ""; for (i = 2; i <= NF; i++) {filename = filename " " $i;} sub(/^ /, "", filename); if (size_bytes < 1024) {printf "%d bytes %s\n", size_bytes, filename;} else if (size_bytes < 1024*1024) {printf "%.2f KB %s\n", size_bytes/1024, filename;} else if (size_bytes < 1024*1024*1024) {printf "%.2f MB %s\n", size_bytes/(1024*1024), filename;} else {printf "%.2f GB %s\n", size_bytes/(1024*1024*1024), filename;}}'\'''
+fi
+unset _gnu_find
 
 alias ..='cd ..'
 alias ...='cd ../..'

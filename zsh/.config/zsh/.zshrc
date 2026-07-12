@@ -44,9 +44,12 @@ echo -ne '\e[5 q'
 
 bindkey '^ ' autosuggest-accept 2>/dev/null || true
 
-# Optimized compinit with daily cache rebuilding
+# Optimized compinit with daily cache rebuilding.
+# Uses a zsh glob qualifier (portable across macOS/BSD and Linux/GNU) instead of
+# `stat`, whose flags differ between the two: rebuild the dump if it's missing or
+# older than 24h, otherwise load the cached version with -C.
 autoload -Uz compinit
-if [ $(date +'%j') -ne $(stat -f '%Sm' -t '%j' "${ZDOTDIR}/.zcompdump" 2>/dev/null || echo 0) ]; then
+if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]] || [[ ! -e ${ZDOTDIR}/.zcompdump ]]; then
   compinit
 else
   compinit -C
@@ -67,7 +70,7 @@ if command -v starship >/dev/null 2>&1; then
 fi
 
 # Run fastfetch in terminal emulators that should show a startup summary.
-if [[ -o interactive && ( $TERM == "xterm-kitty" || $TERM == "xterm-ghostty" || $TERM_PROGRAM == "ghostty" || $TERM_PROGRAM == "Ghostty" ) ]]; then
+if [[ -o interactive && ( $TERM == "xterm-256color" || $TERM == "xterm-ghostty" || $TERM_PROGRAM == "ghostty" || $TERM_PROGRAM == "Ghostty" ) ]]; then
   if command -v fastfetch >/dev/null 2>&1; then
     fastfetch
   fi
@@ -79,10 +82,26 @@ if command -v fd >/dev/null 2>&1; then
   export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 fi
 
-# Sourced at the end for proper functionality
-if [[ -n "$HOMEBREW_PREFIX" ]]; then
-  [[ -r "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] &&
-    source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-  [[ -r "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] &&
-    source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-fi
+# Plugins are sourced at the very end so they hook the line editor correctly
+# (syntax-highlighting in particular must be sourced last).
+# Search both Homebrew (macOS) and distro paths (Arch/CachyOS use
+# /usr/share/zsh/plugins, most other distros use /usr/share).
+typeset -a _zsh_plugin_dirs
+[[ -n "$HOMEBREW_PREFIX" ]] && _zsh_plugin_dirs+=("$HOMEBREW_PREFIX/share")
+_zsh_plugin_dirs+=(/usr/share/zsh/plugins /usr/share)
+
+_load_zsh_plugin() {
+  local plugin="$1" dir
+  for dir in $_zsh_plugin_dirs; do
+    if [[ -r "$dir/$plugin/$plugin.zsh" ]]; then
+      source "$dir/$plugin/$plugin.zsh"
+      return 0
+    fi
+  done
+  return 1
+}
+
+_load_zsh_plugin zsh-autosuggestions
+_load_zsh_plugin zsh-syntax-highlighting   # keep last
+unset -f _load_zsh_plugin
+unset _zsh_plugin_dirs

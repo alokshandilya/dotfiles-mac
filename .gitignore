@@ -1,6 +1,8 @@
-.config/zsh/.zcompcache/
-.config/zsh/.zcompdump
+# zsh completion / session caches (paths are package-relative after stow restructure)
+zsh/.config/zsh/.zcompcache/
+zsh/.config/zsh/.zcompdump
+zsh/.config/zsh/.zsh_sessions/
 
-.config/zed/prompts/prompts-library-db.0.mdb/data.mdb
-.config/zed/prompts/prompts-library-db.0.mdb/lock.mdb
-.config/zsh/.zsh_sessions/72375BED-804E-40F8-85F2-B2E16866EA06.historynew
+# zed local state
+zed/.config/zed/prompts/prompts-library-db.0.mdb/data.mdb
+zed/.config/zed/prompts/prompts-library-db.0.mdb/lock.mdb
